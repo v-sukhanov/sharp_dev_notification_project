@@ -9,14 +9,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { FormsModule } from '@angular/forms';
+import { ChatModule } from './features/chat/chat.module';
+import { NotificationsModule } from './features/notifications/notifications.module';
 
 const config: SocketIoConfig = { url: 'http://localhost:81', options: {} };
 
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+	declarations: [
+		AppComponent
+	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
@@ -25,9 +27,12 @@ const config: SocketIoConfig = { url: 'http://localhost:81', options: {} };
 		MatButtonModule,
 		MatSnackBarModule,
 		SocketIoModule.forRoot(config),
-		FormsModule
+		FormsModule,
+		ChatModule,
+		NotificationsModule,
 	],
-  providers: [],
-  bootstrap: [AppComponent]
+	providers: [],
+	bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

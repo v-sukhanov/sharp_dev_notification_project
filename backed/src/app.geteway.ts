@@ -8,6 +8,8 @@ import {
 import { Socket, Server } from 'socket.io';
 import { AppService } from './app.service';
 import { NotificationDto } from './dto/notification.dto';
+import { MessageDto } from './dto/message.dto';
+
 
 @WebSocketGateway(81, {
 	cors: {
@@ -17,14 +19,30 @@ import { NotificationDto } from './dto/notification.dto';
 export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
 	@WebSocketServer() server: Server;
 
-	constructor(private appService: AppService) {
+	constructor(private readonly _appService: AppService) {
+	}
+
+	@SubscribeMessage('enterChat')
+	async handleEnterChat(client: Socket, payload: string): Promise<void> {
+		this._appService.addUser(payload);
+		this.server.emit('updateChatUsers');
+	}
+
+	@SubscribeMessage('leaveChat')
+	async handleLeaveChat(client: Socket, payload: string): Promise<void> {
+		this._appService.deleteUser(payload);
+		this.server.emit('updateChatUsers');
 	}
 
 	@SubscribeMessage('sendNotification')
-	async handleSendMessage(client: Socket, payload: NotificationDto): Promise<void> {
-		// const message = await this.appService.createMessage(payload);
-		console.log(123123)
+	async handleSendNotification(client: Socket, payload: NotificationDto): Promise<void> {
 		this.server.emit('getNotification', payload);
+	}
+
+	@SubscribeMessage('sendMessage')
+	async handleSendMessage(client: Socket, payload: MessageDto): Promise<void> {
+		this._appService.messages.push(payload)
+		this.server.emit('getMessage', payload);
 	}
 
 	afterInit(server: Server) {

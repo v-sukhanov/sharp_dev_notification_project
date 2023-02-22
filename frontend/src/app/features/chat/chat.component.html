@@ -1,0 +1,38 @@
+<div class="container" *ngIf="!chatEntered">
+	<div>
+		<mat-form-field>
+			<mat-label>Name</mat-label>
+			<input [(ngModel)]="name" matInput>
+		</mat-form-field>
+	</div>
+	<div>
+		<button [disabled]="!name" (click)="goToChat()" mat-raised-button color="primary">Go to the chat</button>
+	</div>
+</div>
+<div class="container" *ngIf="chatEntered">
+	<!--	<div fxFlex="30">-->
+	<!--		<div *ngFor="let user of users">-->
+	<!--			<span>-->
+	<!--				{{user}}-->
+	<!--			</span>-->
+	<!--		</div>-->
+	<!--	</div>-->
+	<!--	<div >-->
+	<div class="messages">
+		<div *ngFor="let message of messages">
+			<span>
+				{{message.name}}: {{message.message}}
+			</span>
+		</div>
+	</div>
+	<div>
+		<mat-form-field>
+			<textarea rows="2" [(ngModel)]="message" matInput></textarea>
+		</mat-form-field>
+	</div>
+	<div>
+		<button [disabled]="!name" (click)="sendMessage()" mat-raised-button color="primary">Send message</button>
+	</div>
+	<!--	</div>-->
+
+</div>

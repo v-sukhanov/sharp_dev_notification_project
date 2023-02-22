@@ -1,17 +1,5 @@
-<div class="container">
-	<div>
-		<mat-form-field>
-			<mat-label>Name</mat-label>
-			<input [(ngModel)]="name"  matInput>
-		</mat-form-field>
-	</div>
-	<div>
-		<mat-form-field>
-			<mat-label>Notification text</mat-label>
-			<textarea [(ngModel)]="msg" matInput placeholder="Ex. It makes me feel..."></textarea>
-		</mat-form-field>
-	</div>
-	<div>
-		<button [disabled]="!name || !msg" (click)="sendNotification()" mat-raised-button color="primary">Send</button>
-	</div>
+<div>
+	<a class="chat-button" href="/chat" mat-raised-button color="primary">Перейти в чат</a>
+	<a class="chat-button" href="/notifications" mat-raised-button color="primary">Перейти в нотификации</a>
 </div>
+<router-outlet></router-outlet>
